@@ -4,9 +4,9 @@ const userInput = document.getElementById("user-input");
 const conversation = [
   { question: "Did you find it?", expectedAnswer: "El asesino?" },
   { question: "Yes", expectedAnswer: "Maybe. Is it Hana?" },
-  { question: "I see", expectedAnswer: null, delayAfter: 5000 },
-  { question: "You don't see the bigger picture", expectedAnswer: null, delayAfter: 5000 },
-  { question: "Maybe this will help", expectedAnswer: null, delayAfter: 5000 },
+  { question: "I see", expectedAnswer: null, delayAfter: 3000 }, // Changed to 3 seconds
+  { question: "You don't see the bigger picture", expectedAnswer: null, delayAfter: 3000 }, // Changed to 3 seconds
+  { question: "Maybe this will help", expectedAnswer: null, delayAfter: 3000 }, // Changed to 3 seconds
   { 
     question: "I’m young but ahead of my years\nMy mind is sharp, my ideas flow wild, they call me unique\nWhat am I?", 
     expectedAnswer: "A gifted child?" 
