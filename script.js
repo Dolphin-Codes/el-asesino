@@ -11,7 +11,7 @@ const conversation = [
     question: "I’m young but ahead of my years\nMy mind is sharp, my ideas flow wild, they call me unique\nWhat am I?", 
     expectedAnswer: "A gifted child?" 
   },
-  { question: "Bye", expectedAnswer: null }
+  { question: "Goodbye", expectedAnswer: null }
 ];
 
 let step = 0;
