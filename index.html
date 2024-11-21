@@ -10,33 +10,15 @@
             color: #00ff00;
             font-family: "Courier New", Courier, monospace;
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        #container {
-            background-color: #111;
-            border: 2px solid #00ff00;
             padding: 20px;
-            width: 90%;
-            max-width: 600px;
-            height: 70%;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
         }
         #messages {
             white-space: pre-wrap;
             overflow-wrap: break-word;
-            flex-grow: 1;
-            margin-bottom: 10px;
         }
         #input-container {
             display: none;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         input {
             width: 100%;
@@ -49,11 +31,9 @@
     </style>
 </head>
 <body>
-    <div id="container">
-        <div id="messages">Initializing...</div>
-        <div id="input-container">
-            <input type="text" id="user-input" placeholder="Type your answer..." autofocus />
-        </div>
+    <div id="messages">Initializing...</div>
+    <div id="input-container">
+        <input type="text" id="user-input" placeholder="Type your answer..." autofocus />
     </div>
     <!-- Free beep sound hosted online -->
     <audio id="beep-sound" src="https://freesound.org/data/previews/337/337049_3233136-lq.mp3"></audio>
@@ -139,7 +119,8 @@
                     messageContainer.innerText = ""; // Clear the "hacker code"
                     nextMessage(); // Start the conversation
                 } else {
-                    displayMessage(hackerLines[index]);
+                    messageContainer.innerText += `\n${hackerLines[index]}`;
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
                     index++;
                 }
             }, 500); // Show a line every 0.5 seconds
