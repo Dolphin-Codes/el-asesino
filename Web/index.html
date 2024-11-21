@@ -1,21 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Asesino</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assesino</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        #messages {
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        #input-container {
+            display: none;
+            margin-top: 20px;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            font-size: 18px;
+            background-color: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+        button {
+            padding: 10px;
+            font-size: 18px;
+            background-color: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div id="terminal">
-      <div id="output"></div>
-      <div id="input-container">
-        <span>&gt; </span>
-        <input type="text" id="user-input" autocomplete="off" />
-      </div>
+    <div id="messages">Initializing...</div>
+    <div id="input-container">
+        <input type="text" id="user-input" placeholder="Type your answer..." />
+        <button onclick="submitInput()">Send</button>
     </div>
-  </div>
-  <script src="script.js"></script>
+    <audio id="beep-sound" src="https://freesound.org/data/previews/522/522253_11461520-lq.mp3"></audio>
+    <script>
+        const messages = [
+            { text: "Did you find it?", expected: "El asesino?" },
+            { text: "Yes", expected: "Maybe. Is it Hana?" },
+            { text: "I see", expected: null },
+            { text: "You don't see the bigger picture", expected: null },
+            { text: "Maybe this will help", expected: null },
+            { text: "I’m young but ahead of my years My mind is sharp, my ideas flow wild, they call me unique what am I?", expected: "A gifted child?" },
+            { text: "Goodbye.", expected: null }
+        ];
+        let currentMessageIndex = -1;
+
+        const messageContainer = document.getElementById("messages");
+        const inputContainer = document.getElementById("input-container");
+        const userInput = document.getElementById("user-input");
+        const beepSound = document.getElementById("beep-sound");
+
+        function playBeep() {
+            beepSound.currentTime = 0; // Reset audio to start
+            beepSound.play();
+        }
+
+        function displayMessage(message) {
+            playBeep();
+            messageContainer.innerText += `\n\n${message}`;
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
+        function submitInput() {
+            const userAnswer = userInput.value.trim();
+            if (currentMessageIndex >= 0 && messages[currentMessageIndex].expected) {
+                displayMessage(userAnswer); // Show user input
+                playBeep();
+                if (userAnswer !== messages[currentMessageIndex].expected) {
+                    displayMessage("Incorrect. Try again.");
+                    userInput.value = ""; // Clear input field
+                    return;
+                }
+            }
+
+            userInput.value = ""; // Clear input
+            nextMessage();
+        }
+
+        function nextMessage() {
+            currentMessageIndex++;
+            if (currentMessageIndex >= messages.length) {
+                inputContainer.style.display = "none";
+                return;
+            }
+
+            const currentMessage = messages[currentMessageIndex];
+            setTimeout(() => {
+                displayMessage(currentMessage.text);
+                if (currentMessage.expected) {
+                    inputContainer.style.display = "block";
+                    userInput.focus();
+                } else {
+                    nextMessage(); // Automatically go to the next message
+                }
+            }, 3000); // 3 seconds delay
+        }
+
+        function displayHackerCode() {
+            let hackerLines = [
+                "Connecting to server...",
+                "Accessing database...",
+                "Decrypting keys...",
+                "Running simulation...",
+                "System breach detected!"
+            ];
+            let index = 0;
+            let hackerInterval = setInterval(() => {
+                if (index >= hackerLines.length) {
+                    clearInterval(hackerInterval);
+                    messageContainer.innerText = ""; // Clear the "hacker code"
+                    nextMessage(); // Start the conversation
+                } else {
+                    displayMessage(hackerLines[index]);
+                    index++;
+                }
+            }, 500); // Show a line every 0.5 seconds
+        }
+
+        // Start the hacker code simulation on load
+        window.onload = () => {
+            displayHackerCode();
+        };
+    </script>
 </body>
 </html>
